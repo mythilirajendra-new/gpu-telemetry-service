@@ -1,0 +1,86 @@
+openapi: "3.0.3"
+info:
+  title: GPU Telemetry Service API
+  description: REST API for a telemetry pipeline for an AI Cluster with messaging queue
+  version: "v1.0.0"
+  contact:
+    name: Mythili Rajendra
+    email: mythilirajendra21@gmail.com
+servers:
+  - url: https://localhost:8181
+    description: local
+tags:
+  - name: Info
+    description: General information of GPU Telemetry Service
+paths:
+  /info:
+    get:
+      tags:
+        - Info
+      summary: Get general information about the GPU Telemetry Service API
+      description: Retrieve general information about the GPU Telemetry Service API, including version and description.
+      responses:
+        '200':
+          description: Successful response with API information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    example: GPU Telemetry Service API
+                  description:
+                    type: string
+                    example: REST API for a telemetry pipeline for an AI Cluster with messaging queue
+                  version:
+                    type: string
+                    example: v1.0.0
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: An unexpected error occurred.
+  /v1/gpus:
+    get:
+      tags:
+        - GPU Telemetry
+      summary: Retrieve GPU telemetry data
+      description: Fetch telemetry data for GPUs in the AI Cluster.
+      responses:
+        '200':
+          description: Successful response with GPU telemetry data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    gpu_id:
+                      type: string
+                      example: gpu-1234
+                    temperature:
+                      type: number
+                      example: 75.5
+                    utilization:
+                      type: number
+                      example: 85.0
+                    memory_usage:
+                      type: number
+                      example: 4096
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: An unexpected error occurred.
